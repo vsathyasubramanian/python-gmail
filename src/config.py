@@ -49,7 +49,7 @@ SCOPES = ['https://www.googleapis.com/auth/gmail.readonly',
           'https://mail.google.com/']
 
 db_username = "root"
-db_password = "jaguarxj"
+db_password = "rootpassword"
 database = "email_manager"
 
 EMAIL_ENTITY = {
