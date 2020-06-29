@@ -36,7 +36,6 @@ class PerformAction():
         """
         for email_obj in kwargs['email_obj_list']:
             if 'UNREAD' in email_obj.labels: email_obj.labels.remove('UNREAD')
-        # return email_obj_list
 
     def mark_as_unread(self, **kwargs):
         """
@@ -49,7 +48,6 @@ class PerformAction():
         """
         for email_obj in kwargs['email_obj_list']:
             if 'UNREAD' not in email_obj.labels: email_obj.labels.append('UNREAD')
-        # return email_obj_list
 
     def move_to_folder(self, **kwargs):
         """
@@ -65,7 +63,6 @@ class PerformAction():
             email_obj.labels = [label for label in email_obj.labels if label not in list(folders_options.keys())]
             # add new folder to email labels
             email_obj.labels.append(kwargs['option_tag'])
-        # return email_obj_list
 
     def add_label(self, **kwargs):
         """
@@ -78,7 +75,6 @@ class PerformAction():
         """
         for email_obj in kwargs['email_obj_list']:
             email_obj.labels.append(kwargs['option_tag'])
-        # return email_obj_list
 
 
 class RunFilters():
