@@ -32,7 +32,7 @@ The first script would trigger an OAuth request to the google server and upon su
 It fetches all the mails from the google servers and parses it and stores it in local database 
 
 ```bash
-python /src/fetch_mails.py
+python fetch_mails.py
 ```
 
 
@@ -40,5 +40,5 @@ The second script would prompt the user the filter to be executed and the action
 The updates are performed based on the action chosen and the local database is updated.
 
 ```bash
-python /src/run_filters.py
+python run_filters.py
 ```
