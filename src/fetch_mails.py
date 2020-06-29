@@ -77,15 +77,12 @@ class FetchMails():
         print("Parsing message count ::" + str(count), flush=True)
         email_obj = EmailEntity()
         msg_str = base64.urlsafe_b64decode(message['raw'].encode('ASCII'))
-        # import pdb;
-        # pdb.set_trace()
         email_obj.msg_id = message['id']
         email_obj.labels = message['labelIds']
         mime_msg = email.message_from_string(msg_str.decode('ascii'))
         email_obj.from_address = mime_msg['From']
         email_obj.to_address = mime_msg['To']
         email_obj.subject = mime_msg['Subject']
-        # email_obj.date = datetime.datetime.strptime(mime_msg['Date'], '%a, %d %b %Y %H:%M:%S %Z')
         email_obj.date = parse(mime_msg['Date'], ignoretz=True)
         for parts in mime_msg.walk():
             if parts.get_content_type() == 'text/plain':
@@ -137,10 +134,6 @@ class FetchMails():
         finally:
             self.db_obj.commit()
             self.db_obj.close()
-
-        # for msg_id in message_id_list:
-        #     response = self.service.users().messages().modify(userId='me', id=msg_id,
-        #                                                       body={'addLabelIds': ['UNREAD']}).execute()
 
     def trigger_script(self):
         """
