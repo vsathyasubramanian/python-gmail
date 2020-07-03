@@ -1,9 +1,10 @@
-from pyfiglet import Figlet
+import sys
+
+from PyInquirer import prompt
+from config import rule_list, condition_dict, predicate_prompt, style, action_dict
 from console import ConsolePrompt
 from email_rules import EmailRules
-from config import rule_list, condition_dict, predicate_prompt, style, action_dict
-from PyInquirer import prompt
-import sys
+from pyfiglet import Figlet
 
 
 def fetch_rules_from_config():

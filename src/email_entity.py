@@ -2,11 +2,10 @@ import datetime
 import json
 
 import validictory
-
 from config import EMAIL_ENTITY
 
 
-class Validator():
+class Validator:
     """
     A decorator that validates the entities when used along with
     setter method of the entities
@@ -29,7 +28,7 @@ class Validator():
         return inner
 
 
-class EmailEntity():
+class EmailEntity:
     """
     email entity class with validator
     """

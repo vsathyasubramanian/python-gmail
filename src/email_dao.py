@@ -8,7 +8,7 @@ import json
 from email_entity import EmailEntity
 
 
-class EmailDAO():
+class EmailDAO:
     """
     dao class hosting all the db interaction methods
     """

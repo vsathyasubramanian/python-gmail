@@ -7,12 +7,11 @@ import base64
 import email
 
 import mysql.connector
-from dateutil.parser import parse
-
-from google_connector import GoogleConnector
 from config import db_username, db_password, database
+from dateutil.parser import parse
 from email_dao import EmailDAO
 from email_entity import EmailEntity
+from google_connector import GoogleConnector
 
 
 class EmailRetriever:

@@ -6,8 +6,7 @@ __author__ = "sathya.v"
 import tabulate
 from PyInquirer import prompt
 
-from config import action_dict, style, action_prompt, \
-    condition_dict, condition_prompt
+from config import action_dict, style, action_prompt, condition_dict, condition_prompt
 
 
 class ConsolePrompt:
@@ -74,7 +73,7 @@ class ConsolePrompt:
                                     tablefmt='psql') + '\n')
         return None
 
-    def print_action_id(self,is_prompt=False):
+    def print_action_id(self, is_prompt=False):
         """
         Brief:
             helper method to prompt the user for action to perform
@@ -93,7 +92,7 @@ class ConsolePrompt:
             return action_id
         return None
 
-    def print_condition_data(self,is_prompt=False):
+    def print_condition_data(self, is_prompt=False):
         """
         Brief:
             helper method to print tabulated condition data
@@ -116,6 +115,6 @@ class ConsolePrompt:
             )
         print(tabulate.tabulate(rows, rule_header, tablefmt='psql'))
         if is_prompt:
-            condition_id_list = list(map(int,prompt(condition_prompt, style=style)['condition_id'].split(',')))
+            condition_id_list = list(map(int, prompt(condition_prompt, style=style)['condition_id'].split(',')))
             return condition_id_list
         return None

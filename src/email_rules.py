@@ -4,10 +4,9 @@ filter script which runs the configured rules from config.py and performs the re
 __author__ = "sathya.v"
 
 import mysql.connector
-from google_connector import GoogleConnector
-
 from config import db_password, db_username, database, folders_options, comparator_map, action_map
 from email_dao import EmailDAO
+from google_connector import GoogleConnector
 
 
 class Action:
@@ -189,7 +188,7 @@ class EmailRules:
                     getattr(self.action_obj, action_map[rule_data['action'][0]])(email_obj_list=email_obj_list,
                                                                                  option_tag=rule_data['action'][1],
                                                                                  modifier_dict=modifier_dict)
-                    modifier_dict = self.__construct_modify_request(email_obj_list,modifier_dict)
+                    modifier_dict = self.__construct_modify_request(email_obj_list, modifier_dict)
                     modifier_dict_list.append(modifier_dict)
                     email_dao_obj.update_email_snapshot(email_obj_list)
                 updated_email_obj_list.extend(email_obj_list)
