@@ -17,12 +17,12 @@ style = style_from_dict({
     Token.Question: '',
 })
 
-filter_email = [
+condition_prompt = [
     {
         'type': 'input',
-        'name': 'filter_id',
-        'message': 'Enter filter ID',
-        'default': '1'
+        'name': 'condition_id',
+        'message': 'Enter comma separated condition ids to include',
+        'default': '1,2,3'
     }
 ]
 action_prompt = [
@@ -33,12 +33,12 @@ action_prompt = [
         'default': '1'
     }
 ]
-option_prompt = [
+predicate_prompt = [
     {
         'type': 'input',
-        'name': 'option_tag',
-        'message': 'Enter option tag from available options',
-        'default': ''
+        'name': 'predicate',
+        'message': 'Enter Predicate Option',
+        'default': 'All'
     }
 ]
 ########################################################################################################################
@@ -49,17 +49,32 @@ SCOPES = ['https://www.googleapis.com/auth/gmail.readonly',
           'https://mail.google.com/']
 
 db_username = "root"
-db_password = "rootpassword"
+db_password = "jaguarxj"
 database = "email_manager"
 
 EMAIL_ENTITY = {
     "email_snapshot_id": {"type": "integer", "required": False},
-    "msg_id": {"type": "string", "required": True},
+    "message_id": {"type": "string", "required": True},
     "from_address": {"type": "string", "required": True},
     "to_address": {"type": "string", "required": True},
     "subject": {"type": "string", "required": True},
     "content": {"type": "string", "required": False},
     "labels": {"type": ["array", "string"], "required": True}
+}
+################################################## MAPPER TABLES #######################################################
+comparator_map = {
+    'Equals': '=',
+    'Does not equal': '!=',
+    'Contains': 'like',
+    'Does not Contain': 'not like',
+    'Less than': '<',
+    'Greater than': '>'
+}
+
+action_map = {
+    'Mark as Read': 'mark_as_read',
+    'Mark as UnRead': 'mark_as_unread',
+    'Move to Folder': 'move_to_folder',
 }
 ################################################# FOLDERS AND LABELS ###################################################
 
@@ -79,7 +94,7 @@ add_label_options = {}
 
 ######{RULE ID : ATTRIBUETS}###########
 
-rule_dict = {
+condition_dict = {
     1: {'Field': 'from_address',
         'Predicate': 'Equals',
         'Data': "Google <no-reply@accounts.google.com>"},
@@ -100,16 +115,24 @@ rule_dict = {
         'Data': "2020-06-27"}
 }
 
-######{FILTER ID : PREDICATE, RULE_ID_KEYS}###########
-filter_dict = {
-    1: {'Predicate': 'All', 'keys': [1, 2, 3]},
-    2: {'Predicate': 'All', 'keys': [4, 5, 6]},
-    3: {'Predicate': 'Any', 'keys': [4, 5, 6]},
-    4: {'Predicate': 'All', 'keys': [1, 2, 6]}
-}
-
 ######{ACTION ID : ACTION}###########
-action_dict = {1: 'Mark as Read',
-               2: 'Mark as UnRead',
-               3: 'Move to Folder',
-               4: 'Add Label'}
+
+action_dict = {
+    1: ('Mark as Read', ''),
+    2: ('Mark as UnRead', ''),
+    3: ('Move to Folder', 'SPAM')
+}
+######### Hard Coded rule list ##########
+
+rule_list = [
+    {
+        'condition_ids': [1, 2, 3],
+        'predicate': 'All',
+        'action': ('Mark as UnRead', '')
+    },
+    {
+        'condition_ids': [4, 5, 6],
+        'predicate': 'All',
+        'action': ('Move to Folder', 'SPAM')
+    }
+]

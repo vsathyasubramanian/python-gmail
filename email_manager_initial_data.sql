@@ -2,7 +2,7 @@ create database email_manager;
 use email_manager;
 CREATE TABLE `email_snapshot` (
   `email_snapshot_id` int NOT NULL AUTO_INCREMENT,
-  `msg_id` varchar(50) NOT NULL,
+  `message_id` varchar(50) NOT NULL,
   `labels` varchar(100) DEFAULT NULL,
   `from_address` varchar(100) NOT NULL,
   `to_address` varchar(100) NOT NULL,
@@ -10,7 +10,7 @@ CREATE TABLE `email_snapshot` (
   `subject` text,
   `content` text,
   UNIQUE KEY `pri_key` (`email_snapshot_id`) USING BTREE,
-  KEY `msg_id_idx` (`msg_id`) USING BTREE,
+  KEY `msg_id_idx` (`message_id`) USING BTREE,
   KEY `from_addr_idx` (`from_address`) USING BTREE,
   KEY `to_addr_idx` (`to_address`) USING BTREE,
   KEY `date_idx` (`date`) USING BTREE

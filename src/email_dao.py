@@ -26,12 +26,12 @@ class EmailDAO():
             status: boolean
         """
         try:
-            query = "INSERT INTO email_snapshot (msg_id, labels, from_address, to_address, date, subject, content) \
+            query = "INSERT INTO email_snapshot (message_id, labels, from_address, to_address, date, subject, content) \
                      VALUES (%s, %s, %s, %s, %s, %s, %s)"
             attribute_values = []
             for email_entity in email_entity_list:
                 attribute_values.append(
-                    (email_entity.msg_id,
+                    (email_entity.message_id,
                      json.dumps(email_entity.labels),
                      email_entity.from_address,
                      email_entity.to_address,
@@ -77,13 +77,13 @@ class EmailDAO():
             status: boolean
         """
         try:
-            query = "REPLACE INTO email_snapshot (email_snapshot_id, msg_id, labels, from_address, to_address, date, subject, content) \
+            query = "REPLACE INTO email_snapshot (email_snapshot_id, message_id, labels, from_address, to_address, date, subject, content) \
                      VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
             attribute_values = []
             for email_entity in email_entity_list:
                 attribute_values.append(
                     (email_entity.email_snapshot_id,
-                     email_entity.msg_id,
+                     email_entity.message_id,
                      json.dumps(email_entity.labels),
                      email_entity.from_address,
                      email_entity.to_address,

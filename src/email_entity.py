@@ -37,7 +37,7 @@ class EmailEntity():
     def __init__(self, email_details=None):
 
         self.__email_snapshot_id = None
-        self.__msg_id = None
+        self.__message_id = None
         self.__from_address = None
         self.__to_address = None
         self.__date = None
@@ -60,13 +60,13 @@ class EmailEntity():
         self.__email_snapshot_id = email_snapshot_id
 
     @property
-    def msg_id(self):
-        return self.__msg_id
+    def message_id(self):
+        return self.__message_id
 
-    @msg_id.setter
-    @Validator(EMAIL_ENTITY['msg_id'])
-    def msg_id(self, msg_id):
-        self.__msg_id = msg_id
+    @message_id.setter
+    @Validator(EMAIL_ENTITY['message_id'])
+    def message_id(self, message_id):
+        self.__message_id = message_id
 
     @property
     def from_address(self):
