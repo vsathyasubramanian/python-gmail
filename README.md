@@ -1,7 +1,11 @@
 # Python Gmail Integration
-![pylint badge](https://github.com/vsathyasubramanian/python-gmail/blob/master/pylint.svg)
+![pylint badge](https://github.com/vsathyasubramanian/python-gmail/blob/python-gmail_v2/pylint.svg)
 
 A simple email manager CLI program using Gmail API to fetch emails and store it in a local DB and process filters on it 
+
+Pylint report is available in [pylint report](https://github.com/vsathyasubramanian/python-gmail/blob/python-gmail_v2/pylint_report.txt) 
+
+Documentation files can be accessed from [index](https://github.com/vsathyasubramanian/python-gmail/blob/python-gmail_v2/docs/index.html)
 
 ## Requirements
 
@@ -32,13 +36,12 @@ The first script would trigger an OAuth request to the google server and upon su
 It fetches all the mails from the google servers and parses it and stores it in local database 
 
 ```bash
-python fetch_mails.py
+python trigger_email_retrival.py
 ```
 
 
-The second script would prompt the user the filter to be executed and the action to be performed upon the filtered emails. (the rules,filters,actions can be modified in config.py)
-The updates are performed based on the action chosen and the local database is updated.
+The second script can be run in two modes, Auto would read the rule from config.py and execute it on the emails and Manual would prompt the user for rules options.The updates are performed based on the action chosen and the updates are pushed to the servers along with a local database is update.
 
 ```bash
-python run_filters.py
+python trigger_email_rules.py <<auto/manual>>
 ```
