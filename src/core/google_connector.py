@@ -12,12 +12,13 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.http import BatchHttpRequest
 
-from config import SCOPES
+from config.config import SCOPES
+
 
 class GoogleConnector:
     """
     Google connector class hosting methods to interact with Google Servers for
-     authentication - OAuth
+     Authentication - OAuth
      Email retrieval
      Email Updation
     """

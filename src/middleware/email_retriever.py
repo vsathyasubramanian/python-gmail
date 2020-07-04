@@ -1,5 +1,5 @@
 """
-this file contains the EmailRetriever class which hosts the methods containing the business logic to help us with
+This file contains the EmailRetriever class which hosts the methods containing the business logic to help us with
 retrieving emails from server using appropriate connectors.
 
 """
@@ -10,11 +10,11 @@ import email
 
 import mysql.connector
 from dateutil.parser import parse
-from google_connector import GoogleConnector
+from core.google_connector import GoogleConnector
 
-from email_dao import EmailDAO
-from email_entity import EmailEntity
-from config import DATABASE, DB_PASSWORD, DB_USERNAME
+from model.email_dao import EmailDAO
+from model.email_entity import EmailEntity
+from config.config import DATABASE, DB_PASSWORD, DB_USERNAME
 
 
 class EmailRetriever:
@@ -34,11 +34,11 @@ class EmailRetriever:
             password=DB_PASSWORD,
             database=DATABASE
         )
-        self.retrieve_email_strategy_mapper = {
-            'google': self.retrieve_email_google_strategy
+        self.email_strategy_mapper = {
+            'google': self.email_google_strategy
         }
 
-    def retrieve_email_google_strategy(self, credentials_path):
+    def email_google_strategy(self, credentials_path):
         """
         Brief:
             Google Email pull strategy method which pulls emails from google servers and populates the local
@@ -123,11 +123,11 @@ class EmailRetriever:
     def retrieve_emails(self, credential_path, service=None):
         """
         Brief:
-            fetches the email content an stores in the local database
+            Fetches the email content an stores in the local database
 
         Pseudo-code:
-            retrieves and calls the strategy method for the given service
-            calls store data method to store the entity in our DB
+            Retrieves and calls the strategy method for the given service
+            Calls store data method to store the entity in our DB
 
         Args:
             credential_path: path of the credential and token file
@@ -137,7 +137,7 @@ class EmailRetriever:
 
         """
         try:
-            self.retrieve_email_strategy_mapper[service](credential_path)
+            self.email_strategy_mapper[service](credential_path)
             self.store_email_snapshots()
             return self.email_obj_list
         except Exception as ex:

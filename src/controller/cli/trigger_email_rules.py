@@ -8,9 +8,10 @@ import sys
 from PyInquirer import prompt
 from pyfiglet import Figlet
 
-from config import action_dict, condition_dict, predicate_prompt, rule_list, style
-from console import ConsolePrompt
-from email_rules import EmailRules
+from config.config import action_dict, action_prompt, condition_dict, condition_prompt, predicate_prompt, rule_list, \
+    style
+from controller.cli.custom_printer import CustomPrinter
+from middleware.email_rules import EmailRules
 
 
 def fetch_rules_from_config():
@@ -69,9 +70,11 @@ def fetch_rules_from_runtime():
                 'action': ('MarkasRead','')
             }]
     """
-    condition_id_list = ConsolePrompt().print_condition_data(is_prompt=True)
+    CustomPrinter().print_condition_data()
+    condition_id_list = list(map(int, prompt(condition_prompt, style=style)['condition_id'].split(',')))
     predicate = prompt(predicate_prompt, style=style)['predicate']
-    action_id = ConsolePrompt().print_action_id(is_prompt=True)
+    CustomPrinter().print_action_id()
+    action_id = int(prompt(action_prompt, style=style)['action_id'])
 
     rule_data = []
     rule_data_dict = {'predicate': predicate,
@@ -94,8 +97,8 @@ if __name__ == "__main__":
         sys.exit()
 
     email_rules_obj = EmailRules()
-    ConsolePrompt().print_rule_data(rule_data_list)
+    CustomPrinter().print_rule_data(rule_data_list)
     updated_email_obj_list = email_rules_obj.process_rules(rule_data_list, '../credentials/', 'google')
     if updated_email_obj_list:
         print('After Update:')
-        ConsolePrompt().print_email_snapshot(updated_email_obj_list)
+        CustomPrinter().print_email_snapshot(updated_email_obj_list)

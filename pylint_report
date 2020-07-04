@@ -1,6 +1,6 @@
 Report
 ======
-428 statements analysed.
+421 statements analysed.
 
 Statistics by type
 ------------------
@@ -8,7 +8,7 @@ Statistics by type
 +---------+-------+-----------+-----------+------------+---------+
 |type     |number |old number |difference |%documented |%badname |
 +=========+=======+===========+===========+============+=========+
-|module   |9      |NC         |NC         |100.00      |0.00     |
+|module   |16     |NC         |NC         |100.00      |0.00     |
 +---------+-------+-----------+-----------+------------+---------+
 |class    |8      |NC         |NC         |100.00      |0.00     |
 +---------+-------+-----------+-----------+------------+---------+
@@ -23,32 +23,38 @@ External dependencies
 ---------------------
 ::
 
-    PyInquirer (src.config)
-      \-prompt (src.console,src.trigger_email_rules)
-    apiclient (src.google_connector)
-    config (src.console,src.email_entity,src.email_retriever,src.email_rules,src.google_connector,src.trigger_email_rules)
-    console (src.trigger_email_retrival,src.trigger_email_rules)
+    PyInquirer (src.config.config)
+      \-prompt (src.controller.cli.trigger_email_rules)
+    apiclient (src.core.google_connector)
+    config
+      \-config (src.controller.cli.custom_printer,src.controller.cli.trigger_email_rules,src.core.google_connector,src.middleware.email_retriever,src.middleware.email_rules,src.model.email_entity)
+    controller
+      \-cli
+        \-custom_printer (src.controller.cli.trigger_email_retrival,src.controller.cli.trigger_email_rules)
+    core
+      \-google_connector (src.middleware.email_retriever,src.middleware.email_rules)
     dateutil
-      \-parser (src.email_retriever)
-    email_dao (src.email_retriever,src.email_rules)
-    email_entity (src.email_dao,src.email_retriever)
-    email_retriever (src.trigger_email_retrival)
-    email_rules (src.trigger_email_rules)
+      \-parser (src.middleware.email_retriever)
     google
       \-auth
         \-transport
-          \-requests (src.google_connector)
+          \-requests (src.core.google_connector)
     google_auth_oauthlib
-      \-flow (src.google_connector)
-    google_connector (src.email_retriever,src.email_rules)
+      \-flow (src.core.google_connector)
     googleapiclient
-      \-discovery (src.google_connector)
-      \-http (src.google_connector)
+      \-discovery (src.core.google_connector)
+      \-http (src.core.google_connector)
+    middleware
+      \-email_retriever (src.controller.cli.trigger_email_retrival)
+      \-email_rules (src.controller.cli.trigger_email_rules)
+    model
+      \-email_dao (src.middleware.email_retriever,src.middleware.email_rules)
+      \-email_entity (src.middleware.email_retriever,src.model.email_dao)
     mysql
-      \-connector (src.email_retriever,src.email_rules)
-    pyfiglet (src.trigger_email_retrival,src.trigger_email_rules)
-    tabulate (src.console)
-    validictory (src.email_entity)
+      \-connector (src.middleware.email_retriever,src.middleware.email_rules)
+    pyfiglet (src.controller.cli.trigger_email_retrival,src.controller.cli.trigger_email_rules)
+    tabulate (src.controller.cli.custom_printer)
+    validictory (src.model.email_entity)
 
 
 
@@ -58,13 +64,13 @@ Raw metrics
 +----------+-------+------+---------+-----------+
 |type      |number |%     |previous |difference |
 +==========+=======+======+=========+===========+
-|code      |574    |51.16 |NC       |NC         |
+|code      |575    |50.93 |NC       |NC         |
 +----------+-------+------+---------+-----------+
-|docstring |409    |36.45 |NC       |NC         |
+|docstring |407    |36.05 |NC       |NC         |
 +----------+-------+------+---------+-----------+
-|comment   |18     |1.60  |NC       |NC         |
+|comment   |18     |1.59  |NC       |NC         |
 +----------+-------+------+---------+-----------+
-|empty     |121    |10.78 |NC       |NC         |
+|empty     |129    |11.43 |NC       |NC         |
 +----------+-------+------+---------+-----------+
 
 
@@ -77,7 +83,7 @@ Duplication
 +=========================+======+=========+===========+
 |nb duplicated lines      |6     |NC       |NC         |
 +-------------------------+------+---------+-----------+
-|percent duplicated lines |0.543 |NC       |NC         |
+|percent duplicated lines |0.547 |NC       |NC         |
 +-------------------------+------+---------+-----------+
 
 
@@ -88,7 +94,7 @@ Messages by category
 +-----------+-------+---------+-----------+
 |type       |number |previous |difference |
 +===========+=======+=========+===========+
-|convention |10     |NC       |NC         |
+|convention |9      |NC       |NC         |
 +-----------+-------+---------+-----------+
 |refactor   |13     |NC       |NC         |
 +-----------+-------+---------+-----------+
@@ -102,21 +108,21 @@ Messages by category
 % errors / warnings by module
 -----------------------------
 
-+------------------------+------+--------+---------+-----------+
-|module                  |error |warning |refactor |convention |
-+========================+======+========+=========+===========+
-|src.google_connector    |66.67 |0.00    |0.00     |0.00       |
-+------------------------+------+--------+---------+-----------+
-|src.email_entity        |16.67 |0.00    |15.38    |90.00      |
-+------------------------+------+--------+---------+-----------+
-|src.email_retriever     |16.67 |0.00    |0.00     |0.00       |
-+------------------------+------+--------+---------+-----------+
-|src.console             |0.00  |100.00  |30.77    |10.00      |
-+------------------------+------+--------+---------+-----------+
-|src.email_rules         |0.00  |0.00    |46.15    |0.00       |
-+------------------------+------+--------+---------+-----------+
-|src.trigger_email_rules |0.00  |0.00    |7.69     |0.00       |
-+------------------------+------+--------+---------+-----------+
++----------------------------------+------+--------+---------+-----------+
+|module                            |error |warning |refactor |convention |
++==================================+======+========+=========+===========+
+|src.core.google_connector         |66.67 |0.00    |0.00     |0.00       |
++----------------------------------+------+--------+---------+-----------+
+|src.model.email_entity            |16.67 |0.00    |15.38    |100.00     |
++----------------------------------+------+--------+---------+-----------+
+|src.middleware.email_retriever    |16.67 |0.00    |0.00     |0.00       |
++----------------------------------+------+--------+---------+-----------+
+|src.controller.cli.custom_printer |0.00  |100.00  |30.77    |0.00       |
++----------------------------------+------+--------+---------+-----------+
+|src.middleware.email_rules        |0.00  |0.00    |46.15    |0.00       |
++----------------------------------+------+--------+---------+-----------+
+|src.model.__init__                |0.00  |0.00    |7.69     |0.00       |
++----------------------------------+------+--------+---------+-----------+
 
 
 
@@ -139,8 +145,6 @@ Messages
 |too-many-instance-attributes |1           |
 +-----------------------------+------------+
 |too-few-public-methods       |1           |
-+-----------------------------+------------+
-|missing-final-newline        |1           |
 +-----------------------------+------------+
 |implicit-str-concat          |1           |
 +-----------------------------+------------+

@@ -1,20 +1,20 @@
 """
-this file contains the EmailRule class which hosts the methods containing the business logic to help us with
+This file contains the EmailRule class which hosts the methods containing the business logic to help us with
 processing the rules on the emails available in our local database and push the changes to the server using
 appropriate connectors.
 """
 __author__ = "sathya.v"
 
 import mysql.connector
-from google_connector import GoogleConnector
+from core.google_connector import GoogleConnector
 
-from config import DATABASE, DB_PASSWORD, DB_USERNAME, action_map, comparator_map, folders_options
-from email_dao import EmailDAO
+from config.config import DATABASE, DB_PASSWORD, DB_USERNAME, action_map, comparator_map, folders_options
+from model.email_dao import EmailDAO
 
 
 class Action:
     """
-    helper class containing the required logic on executing the action on the emails
+    Helper class containing the required logic on executing the action on the emails
     """
 
     def __init__(self):
@@ -22,7 +22,7 @@ class Action:
 
     def mark_as_read(self, **kwargs):
         """
-        marks the emails as read
+        Marks the emails as read
         Args:
             email obj list: list of email objects
             modifier_dict: modifier dict to be updated for creating the update request
@@ -37,7 +37,7 @@ class Action:
 
     def mark_as_unread(self, **kwargs):
         """
-        marks the emails as unread
+        Marks the emails as unread
         Args:
             email obj list: list of email objects
             modifier_dict: modifier dict to be updated for creating the update request
@@ -52,7 +52,7 @@ class Action:
 
     def move_to_folder(self, **kwargs):
         """
-        moves the emails to the given folders
+        Moves the emails to the given folders
         Args:
             email obj list: list of email objects
             modifier_dict: modifier dict to be updated for creating the update request
@@ -71,10 +71,10 @@ class Action:
 class EmailRules:
     """
     EmailRules class hosting the core methods to process the rules on the available emails
-        run the filter conditions to construct appropriate select query
-        run the query and process the required action on the result
-        stores the email entity with the updates in the local database
-        uses the appropriate strategy method to authenticate and push the updates to server
+        Run the filter conditions to construct appropriate select query
+        Run the query and process the required action on the result
+        Stores the email entity with the updates in the local database
+        Uses the appropriate strategy method to authenticate and push the updates to server
     """
 
     def __init__(self):
@@ -95,8 +95,8 @@ class EmailRules:
             Google Email update strategy method which updates emails to google servers
 
         Pseudo-code:
-            calls authentication module first to authenticate and retrieve the OAuth token
-            calls batch modify email method to update all email content to mail server
+            Calls authentication module first to authenticate and retrieve the OAuth token
+            Calls batch modify email method to update all email content to mail server
         Args:
             modifier_dict_list: list of modification dict to be given as the body of the request to be sent to google
             credential_path: path of the credential/token file
@@ -113,7 +113,7 @@ class EmailRules:
     def __construct_query(self, filter_data):
         """
         Brief:
-            method to construct the fetch query based on the filter condition
+            Method to construct the fetch query based on the filter condition
         Args:
             filter_data: dict
 
@@ -127,7 +127,7 @@ class EmailRules:
                 # fist condition, append where
                 condition_query += " where "
             else:
-                # not the first condiion,append operators
+                # not the first condition,append operators
                 condition_query += " and " if filter_data['predicate'] == 'All' else " or "
             if condition['Predicate'] not in ('Contains', 'Does not Contain'):
                 condition_query += condition['Field'] + " " + comparator_map[condition['Predicate']] + " '" + \
@@ -140,7 +140,7 @@ class EmailRules:
     def __construct_modify_request(self, email_obj_list, modifier_dict):
         """
         Brief:
-            helper method to construct the request to be sent to google servers to update the changes
+            Helper method to construct the request to be sent to google servers to update the changes
         Args:
             email_obj_list: list of email obj
             modifier_dict: modify dict with remove and add labels populated
@@ -158,9 +158,9 @@ class EmailRules:
             and push it to servers
         Pseudo-code:
             Construct the query as per the filter rules
-            fetch the relevant data from DB
-            perform required modifications
-            update the database
+            Fetch the relevant data from DB
+            Perform required modifications
+            Update the database
         Args:
             rule_data_list: List of rule dicts to be applied in the emails
             [{
