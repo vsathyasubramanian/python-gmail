@@ -3,7 +3,7 @@ global config file containing frequently varied configurations
 """
 __author__ = "sathya.v"
 
-from PyInquirer import style_from_dict, Token
+from PyInquirer import Token, style_from_dict
 
 ##################################################Console formater######################################################
 
@@ -48,9 +48,9 @@ predicate_prompt = [
 SCOPES = ['https://www.googleapis.com/auth/gmail.readonly',
           'https://mail.google.com/']
 
-db_username = "root"
-db_password = "testpass"
-database = "email_manager"
+DB_USERNAME = "root"
+DB_PASSWORD = "testpass"
+DATABASE = "email_manager"
 
 EMAIL_ENTITY = {
     "email_snapshot_id": {"type": "integer", "required": False},
@@ -61,6 +61,7 @@ EMAIL_ENTITY = {
     "content": {"type": "string", "required": False},
     "labels": {"type": ["array", "string"], "required": True}
 }
+
 ################################################## MAPPER TABLES #######################################################
 comparator_map = {
     'Equals': '=',
@@ -76,6 +77,7 @@ action_map = {
     'Mark as UnRead': 'mark_as_unread',
     'Move to Folder': 'move_to_folder',
 }
+
 ################################################# FOLDERS AND LABELS ###################################################
 
 ######{LABEL NAME : LABEL ID}###########
@@ -89,10 +91,17 @@ folders_options = {
 
 }
 
-add_label_options = {}
-################################################## RULES AND FILTER ####################################################
+################################################## RULES AND FILTERS ###################################################
 
-######{RULE ID : ATTRIBUETS}###########
+######{ACTION ID : ACTION}###########
+
+action_dict = {
+    1: ('Mark as Read', ''),
+    2: ('Mark as UnRead', ''),
+    3: ('Move to Folder', 'SPAM')
+}
+
+######{CONDITION ID : ATTRIBUETS}###########
 
 condition_dict = {
     1: {'Field': 'from_address',
@@ -115,13 +124,6 @@ condition_dict = {
         'Data': "2020-06-27"}
 }
 
-######{ACTION ID : ACTION}###########
-
-action_dict = {
-    1: ('Mark as Read', ''),
-    2: ('Mark as UnRead', ''),
-    3: ('Move to Folder', 'SPAM')
-}
 ######### Hard Coded rule list ##########
 
 rule_list = [

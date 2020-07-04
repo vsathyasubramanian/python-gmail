@@ -1,3 +1,8 @@
+"""
+this file contains the Email entity with the required validators
+"""
+__author__ = "sathya.v"
+
 import datetime
 import json
 

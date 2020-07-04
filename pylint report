@@ -1,6 +1,6 @@
 Report
 ======
-397 statements analysed.
+428 statements analysed.
 
 Statistics by type
 ------------------
@@ -8,13 +8,13 @@ Statistics by type
 +---------+-------+-----------+-----------+------------+---------+
 |type     |number |old number |difference |%documented |%badname |
 +=========+=======+===========+===========+============+=========+
-|module   |7      |NC         |NC         |85.71       |0.00     |
+|module   |9      |NC         |NC         |100.00      |0.00     |
 +---------+-------+-----------+-----------+------------+---------+
 |class    |8      |NC         |NC         |100.00      |0.00     |
 +---------+-------+-----------+-----------+------------+---------+
 |method   |47     |NC         |NC         |82.98       |0.00     |
 +---------+-------+-----------+-----------+------------+---------+
-|function |1      |NC         |NC         |100.00      |0.00     |
+|function |3      |NC         |NC         |100.00      |0.00     |
 +---------+-------+-----------+-----------+------------+---------+
 
 
@@ -24,27 +24,29 @@ External dependencies
 ::
 
     PyInquirer (src.config)
-      \-prompt (src.console)
-    apiclient (src.authenticate,src.fetch_mails,src.run_filters)
-    authenticate (src.fetch_mails,src.run_filters)
-    config (src.authenticate,src.console,src.email_entity,src.fetch_mails,src.run_filters)
-    console (src.fetch_mails,src.run_filters)
+      \-prompt (src.console,src.trigger_email_rules)
+    apiclient (src.google_connector)
+    config (src.console,src.email_entity,src.email_retriever,src.email_rules,src.google_connector,src.trigger_email_rules)
+    console (src.trigger_email_retrival,src.trigger_email_rules)
     dateutil
-      \-parser (src.fetch_mails)
-    email_dao (src.fetch_mails,src.run_filters)
-    email_entity (src.email_dao,src.fetch_mails)
+      \-parser (src.email_retriever)
+    email_dao (src.email_retriever,src.email_rules)
+    email_entity (src.email_dao,src.email_retriever)
+    email_retriever (src.trigger_email_retrival)
+    email_rules (src.trigger_email_rules)
     google
       \-auth
         \-transport
-          \-requests (src.authenticate)
+          \-requests (src.google_connector)
     google_auth_oauthlib
-      \-flow (src.authenticate)
+      \-flow (src.google_connector)
+    google_connector (src.email_retriever,src.email_rules)
     googleapiclient
-      \-discovery (src.fetch_mails,src.run_filters)
-      \-http (src.fetch_mails)
+      \-discovery (src.google_connector)
+      \-http (src.google_connector)
     mysql
-      \-connector (src.fetch_mails,src.run_filters)
-    pyfiglet (src.fetch_mails,src.run_filters)
+      \-connector (src.email_retriever,src.email_rules)
+    pyfiglet (src.trigger_email_retrival,src.trigger_email_rules)
     tabulate (src.console)
     validictory (src.email_entity)
 
@@ -56,13 +58,13 @@ Raw metrics
 +----------+-------+------+---------+-----------+
 |type      |number |%     |previous |difference |
 +==========+=======+======+=========+===========+
-|code      |530    |56.38 |NC       |NC         |
+|code      |574    |51.16 |NC       |NC         |
 +----------+-------+------+---------+-----------+
-|docstring |277    |29.47 |NC       |NC         |
+|docstring |409    |36.45 |NC       |NC         |
 +----------+-------+------+---------+-----------+
-|comment   |28     |2.98  |NC       |NC         |
+|comment   |18     |1.60  |NC       |NC         |
 +----------+-------+------+---------+-----------+
-|empty     |105    |11.17 |NC       |NC         |
+|empty     |121    |10.78 |NC       |NC         |
 +----------+-------+------+---------+-----------+
 
 
@@ -73,9 +75,9 @@ Duplication
 +-------------------------+------+---------+-----------+
 |                         |now   |previous |difference |
 +=========================+======+=========+===========+
-|nb duplicated lines      |21    |NC       |NC         |
+|nb duplicated lines      |6     |NC       |NC         |
 +-------------------------+------+---------+-----------+
-|percent duplicated lines |2.268 |NC       |NC         |
+|percent duplicated lines |0.543 |NC       |NC         |
 +-------------------------+------+---------+-----------+
 
 
@@ -86,13 +88,13 @@ Messages by category
 +-----------+-------+---------+-----------+
 |type       |number |previous |difference |
 +===========+=======+=========+===========+
-|convention |16     |NC       |NC         |
+|convention |10     |NC       |NC         |
 +-----------+-------+---------+-----------+
 |refactor   |13     |NC       |NC         |
 +-----------+-------+---------+-----------+
-|warning    |5      |NC       |NC         |
+|warning    |1      |NC       |NC         |
 +-----------+-------+---------+-----------+
-|error      |5      |NC       |NC         |
+|error      |6      |NC       |NC         |
 +-----------+-------+---------+-----------+
 
 
@@ -100,23 +102,21 @@ Messages by category
 % errors / warnings by module
 -----------------------------
 
-+-----------------+------+--------+---------+-----------+
-|module           |error |warning |refactor |convention |
-+=================+======+========+=========+===========+
-|src.fetch_mails  |60.00 |20.00   |0.00     |0.00       |
-+-----------------+------+--------+---------+-----------+
-|src.run_filters  |20.00 |0.00    |61.54    |12.50      |
-+-----------------+------+--------+---------+-----------+
-|src.email_entity |20.00 |0.00    |15.38    |62.50      |
-+-----------------+------+--------+---------+-----------+
-|src.email_dao    |0.00  |60.00   |0.00     |6.25       |
-+-----------------+------+--------+---------+-----------+
-|src.authenticate |0.00  |20.00   |7.69     |0.00       |
-+-----------------+------+--------+---------+-----------+
-|src.console      |0.00  |0.00    |15.38    |0.00       |
-+-----------------+------+--------+---------+-----------+
-|src.config       |0.00  |0.00    |0.00     |18.75      |
-+-----------------+------+--------+---------+-----------+
++------------------------+------+--------+---------+-----------+
+|module                  |error |warning |refactor |convention |
++========================+======+========+=========+===========+
+|src.google_connector    |66.67 |0.00    |0.00     |0.00       |
++------------------------+------+--------+---------+-----------+
+|src.email_entity        |16.67 |0.00    |15.38    |90.00      |
++------------------------+------+--------+---------+-----------+
+|src.email_retriever     |16.67 |0.00    |0.00     |0.00       |
++------------------------+------+--------+---------+-----------+
+|src.console             |0.00  |100.00  |30.77    |10.00      |
++------------------------+------+--------+---------+-----------+
+|src.email_rules         |0.00  |0.00    |46.15    |0.00       |
++------------------------+------+--------+---------+-----------+
+|src.trigger_email_rules |0.00  |0.00    |7.69     |0.00       |
++------------------------+------+--------+---------+-----------+
 
 
 
@@ -126,35 +126,29 @@ Messages
 +-----------------------------+------------+
 |message id                   |occurrences |
 +=============================+============+
+|no-self-use                  |10          |
++-----------------------------+------------+
 |missing-function-docstring   |8           |
-+-----------------------------+------------+
-|no-self-use                  |6           |
-+-----------------------------+------------+
-|broad-except                 |5           |
 +-----------------------------+------------+
 |no-member                    |4           |
 +-----------------------------+------------+
-|invalid-name                 |3           |
-+-----------------------------+------------+
-|duplicate-code               |3           |
-+-----------------------------+------------+
-|too-many-instance-attributes |2           |
-+-----------------------------+------------+
-|too-few-public-methods       |2           |
-+-----------------------------+------------+
-|multiple-statements          |2           |
+|misplaced-bare-raise         |2           |
 +-----------------------------+------------+
 |unidiomatic-typecheck        |1           |
 +-----------------------------+------------+
-|missing-module-docstring     |1           |
+|too-many-instance-attributes |1           |
 +-----------------------------+------------+
-|misplaced-bare-raise         |1           |
+|too-few-public-methods       |1           |
 +-----------------------------+------------+
-|line-too-long                |1           |
+|missing-final-newline        |1           |
++-----------------------------+------------+
+|implicit-str-concat          |1           |
++-----------------------------+------------+
+|duplicate-code               |1           |
 +-----------------------------+------------+
 
 
 
 
 ------------------------------------------------------------------
-Your code has been rated at 8.51/10 (previous run: 8.51/10, +0.00)
+Your code has been rated at 8.74/10 (previous run: 8.74/10, +0.00)

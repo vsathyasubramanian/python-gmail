@@ -6,7 +6,7 @@ __author__ = "sathya.v"
 import tabulate
 from PyInquirer import prompt
 
-from config import action_dict, style, action_prompt, condition_dict, condition_prompt
+from config import action_dict, action_prompt, condition_dict, condition_prompt, style
 
 
 class ConsolePrompt:
@@ -71,7 +71,6 @@ class ConsolePrompt:
             print("If '%s' of the above conditions are met, Perform the below actions" % rule_data['predicate'])
             print(tabulate.tabulate([[rule_data['action'][0] + ' ' + rule_data['action'][1]]], ['Action'],
                                     tablefmt='psql') + '\n')
-        return None
 
     def print_action_id(self, is_prompt=False):
         """
@@ -102,7 +101,7 @@ class ConsolePrompt:
             None
         """
 
-        rule_header = ['Condiion ID' 'Field', 'Predicate', 'Value']
+        rule_header = ['Condition ID' 'Field', 'Predicate', 'Value']
         rows = []
         for condition_id, condition in condition_dict.items():
             rows.append(

@@ -1,17 +1,20 @@
 """
-filter script which runs the configured rules from config.py and performs the required actions
+this file contains the EmailRule class which hosts the methods containing the business logic to help us with
+processing the rules on the emails available in our local database and push the changes to the server using
+appropriate connectors.
 """
 __author__ = "sathya.v"
 
 import mysql.connector
-from config import db_password, db_username, database, folders_options, comparator_map, action_map
-from email_dao import EmailDAO
 from google_connector import GoogleConnector
+
+from config import DATABASE, DB_PASSWORD, DB_USERNAME, action_map, comparator_map, folders_options
+from email_dao import EmailDAO
 
 
 class Action:
     """
-    helper class containing all the logic towards the required action
+    helper class containing the required logic on executing the action on the emails
     """
 
     def __init__(self):
@@ -21,34 +24,39 @@ class Action:
         """
         marks the emails as read
         Args:
-            email obj list:
+            email obj list: list of email objects
+            modifier_dict: modifier dict to be updated for creating the update request
 
         Returns:
 
         """
         for email_obj in kwargs['email_obj_list']:
-            if 'UNREAD' in email_obj.labels: email_obj.labels.remove('UNREAD')
+            if 'UNREAD' in email_obj.labels:
+                email_obj.labels.remove('UNREAD')
         kwargs['modifier_dict']['removeLabelIds'].append('UNREAD')
 
     def mark_as_unread(self, **kwargs):
         """
         marks the emails as unread
         Args:
-            email obj list:
+            email obj list: list of email objects
+            modifier_dict: modifier dict to be updated for creating the update request
 
         Returns:
 
         """
         for email_obj in kwargs['email_obj_list']:
-            if 'UNREAD' not in email_obj.labels: email_obj.labels.append('UNREAD')
+            if 'UNREAD' not in email_obj.labels:
+                email_obj.labels.append('UNREAD')
         kwargs['modifier_dict']['addLabelIds'].append('UNREAD')
 
     def move_to_folder(self, **kwargs):
         """
         moves the emails to the given folders
         Args:
-            email obj list , destination folder
-
+            email obj list: list of email objects
+            modifier_dict: modifier dict to be updated for creating the update request
+            option_tag: the destination folder
         Returns:
 
         """
@@ -62,23 +70,26 @@ class Action:
 
 class EmailRules:
     """
-    main filter class which hosts the core filter logic and methods
+    EmailRules class hosting the core methods to process the rules on the available emails
+        run the filter conditions to construct appropriate select query
+        run the query and process the required action on the result
+        stores the email entity with the updates in the local database
+        uses the appropriate strategy method to authenticate and push the updates to server
     """
 
     def __init__(self):
-        # self.email_obj_list = None
         self.action_obj = Action()
         self.db_obj = mysql.connector.connect(
             host="localhost",
-            user=db_username,
-            password=db_password,
-            database=database
+            user=DB_USERNAME,
+            password=DB_PASSWORD,
+            database=DATABASE
         )
         self.modify_email_strategy_mapper = {
             'google': self.modify_email_google_strategy
         }
 
-    def modify_email_google_strategy(self, modifier_dict_list):
+    def modify_email_google_strategy(self, modifier_dict_list, credential_path):
         """
         Brief:
             Google Email update strategy method which updates emails to google servers
@@ -88,11 +99,11 @@ class EmailRules:
             calls batch modify email method to update all email content to mail server
         Args:
             modifier_dict_list: list of modification dict to be given as the body of the request to be sent to google
-
+            credential_path: path of the credential/token file
         Returns:
 
         """
-        google_services_obj = GoogleConnector(credentials_file='credentials.json')
+        google_services_obj = GoogleConnector(credentials_path=credential_path)
         print("Authenticating...")
         google_services_obj.authenticate()
         print("Authentication Complete...")
@@ -140,7 +151,7 @@ class EmailRules:
         modifier_dict['ids'] = [email_obj.message_id for email_obj in email_obj_list]
         return modifier_dict
 
-    def process_rules(self, rule_data_list, service):
+    def process_rules(self, rule_data_list, credential_path, service):
         """
         Brief:
             Method to Apply the rules to retrieve the emails from local db and apply the action process upon the email
@@ -172,6 +183,7 @@ class EmailRules:
                 'action': ('MarkasRead','')
             }]
             service: email service name
+            credential_path: path of the credential and token file
         Returns:
             status : Boolean
 
@@ -192,8 +204,9 @@ class EmailRules:
                     modifier_dict_list.append(modifier_dict)
                     email_dao_obj.update_email_snapshot(email_obj_list)
                 updated_email_obj_list.extend(email_obj_list)
-            self.modify_email_strategy_mapper[service](modifier_dict_list)
+            self.modify_email_strategy_mapper[service](modifier_dict_list, credential_path)
             self.db_obj.commit()
+
             return updated_email_obj_list
 
         except Exception as ex:

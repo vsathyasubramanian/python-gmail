@@ -7,23 +7,26 @@ import os.path
 import pickle
 
 from apiclient import errors
-from config import SCOPES
 from google.auth.transport.requests import Request
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.http import BatchHttpRequest
 
+from config import SCOPES
 
 class GoogleConnector:
     """
-    main authenticate class with all the OAuth functionalities to connect with gmail servers
+    Google connector class hosting methods to interact with Google Servers for
+     authentication - OAuth
+     Email retrieval
+     Email Updation
     """
 
-    def __init__(self, credentials_file):
+    def __init__(self, credentials_path):
         self.scope = SCOPES
-        self.token_file = 'token.pickle'
+        self.token_file = credentials_path + 'token.pickle'
         self.user_id = 'me'
-        self.credentials_file = credentials_file
+        self.credentials_file = credentials_path + 'credentials.json'
         self.cred = None
         self.service = None
 
@@ -60,10 +63,7 @@ class GoogleConnector:
             The file token.pickle stores the user's access and refresh tokens, and is created automatically when the
             authorization flow completes for the first time.
 
-        :param None: None
-        :type None: None
-        :return: OAuth credential token
-        :rtype: Boolean
+        Returns:
         """
         try:
             self.cred = None
@@ -129,6 +129,7 @@ class GoogleConnector:
         try:
             modify_response = self.service.users().messages().batchModify(userId=self.user_id,
                                                                           body=body_dict).execute()
+            return modify_response
         except errors.HttpError as error:
             print("Exception in fetch email method %s" % error)
             raise

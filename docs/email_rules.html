@@ -1,0 +1,789 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.8.3" />
+<title>src.email_rules API documentation</title>
+<meta name="description" content="this file contains the EmailRule class which hosts the methods containing the business logic to help us with
+processing the rules on the emails …" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js" integrity="sha256-eOgo0OtLL4cdq7RdwRUiGKLX9XsIJ7nGhWEKbohmVAQ=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>src.email_rules</code></h1>
+</header>
+<section id="section-intro">
+<p>this file contains the EmailRule class which hosts the methods containing the business logic to help us with
+processing the rules on the emails available in our local database and push the changes to the server using
+appropriate connectors.</p>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">&#34;&#34;&#34;
+this file contains the EmailRule class which hosts the methods containing the business logic to help us with
+processing the rules on the emails available in our local database and push the changes to the server using
+appropriate connectors.
+&#34;&#34;&#34;
+__author__ = &#34;sathya.v&#34;
+
+import mysql.connector
+from google_connector import GoogleConnector
+
+from config import DATABASE, DB_PASSWORD, DB_USERNAME, action_map, comparator_map, folders_options
+from email_dao import EmailDAO
+
+
+class Action:
+    &#34;&#34;&#34;
+    helper class containing the required logic on executing the action on the emails
+    &#34;&#34;&#34;
+
+    def __init__(self):
+        pass
+
+    def mark_as_read(self, **kwargs):
+        &#34;&#34;&#34;
+        marks the emails as read
+        Args:
+            email obj list: list of email objects
+            modifier_dict: modifier dict to be updated for creating the update request
+
+        Returns:
+
+        &#34;&#34;&#34;
+        for email_obj in kwargs[&#39;email_obj_list&#39;]:
+            if &#39;UNREAD&#39; in email_obj.labels:
+                email_obj.labels.remove(&#39;UNREAD&#39;)
+        kwargs[&#39;modifier_dict&#39;][&#39;removeLabelIds&#39;].append(&#39;UNREAD&#39;)
+
+    def mark_as_unread(self, **kwargs):
+        &#34;&#34;&#34;
+        marks the emails as unread
+        Args:
+            email obj list: list of email objects
+            modifier_dict: modifier dict to be updated for creating the update request
+
+        Returns:
+
+        &#34;&#34;&#34;
+        for email_obj in kwargs[&#39;email_obj_list&#39;]:
+            if &#39;UNREAD&#39; not in email_obj.labels:
+                email_obj.labels.append(&#39;UNREAD&#39;)
+        kwargs[&#39;modifier_dict&#39;][&#39;addLabelIds&#39;].append(&#39;UNREAD&#39;)
+
+    def move_to_folder(self, **kwargs):
+        &#34;&#34;&#34;
+        moves the emails to the given folders
+        Args:
+            email obj list: list of email objects
+            modifier_dict: modifier dict to be updated for creating the update request
+            option_tag: the destination folder
+        Returns:
+
+        &#34;&#34;&#34;
+        for email_obj in kwargs[&#39;email_obj_list&#39;]:
+            # remove existing folder from labels list
+            email_obj.labels = [label for label in email_obj.labels if label not in list(folders_options.keys())]
+            # add new folder to email labels
+            email_obj.labels.append(kwargs[&#39;option_tag&#39;])
+        kwargs[&#39;modifier_dict&#39;][&#39;addLabelIds&#39;].append(kwargs[&#39;option_tag&#39;])
+
+
+class EmailRules:
+    &#34;&#34;&#34;
+    EmailRules class hosting the core methods to process the rules on the available emails
+        run the filter conditions to construct appropriate select query
+        run the query and process the required action on the result
+        stores the email entity with the updates in the local database
+        uses the appropriate strategy method to authenticate and push the updates to server
+    &#34;&#34;&#34;
+
+    def __init__(self):
+        self.action_obj = Action()
+        self.db_obj = mysql.connector.connect(
+            host=&#34;localhost&#34;,
+            user=DB_USERNAME,
+            password=DB_PASSWORD,
+            database=DATABASE
+        )
+        self.modify_email_strategy_mapper = {
+            &#39;google&#39;: self.modify_email_google_strategy
+        }
+
+    def modify_email_google_strategy(self, modifier_dict_list, credential_path):
+        &#34;&#34;&#34;
+        Brief:
+            Google Email update strategy method which updates emails to google servers
+
+        Pseudo-code:
+            calls authentication module first to authenticate and retrieve the OAuth token
+            calls batch modify email method to update all email content to mail server
+        Args:
+            modifier_dict_list: list of modification dict to be given as the body of the request to be sent to google
+            credential_path: path of the credential/token file
+        Returns:
+
+        &#34;&#34;&#34;
+        google_services_obj = GoogleConnector(credentials_path=credential_path)
+        print(&#34;Authenticating...&#34;)
+        google_services_obj.authenticate()
+        print(&#34;Authentication Complete...&#34;)
+        for modifier_dict in modifier_dict_list:
+            google_services_obj.batch_modify_emails(modifier_dict)
+
+    def __construct_query(self, filter_data):
+        &#34;&#34;&#34;
+        Brief:
+            method to construct the fetch query based on the filter condition
+        Args:
+            filter_data: dict
+
+        Returns:
+            query: string
+        &#34;&#34;&#34;
+        base_query = &#34;SELECT * FROM email_snapshot&#34;
+        condition_query = &#34;&#34;
+        for condition in filter_data[&#39;conditions&#39;]:
+            if condition_query == &#34;&#34;:
+                # fist condition, append where
+                condition_query += &#34; where &#34;
+            else:
+                # not the first condiion,append operators
+                condition_query += &#34; and &#34; if filter_data[&#39;predicate&#39;] == &#39;All&#39; else &#34; or &#34;
+            if condition[&#39;Predicate&#39;] not in (&#39;Contains&#39;, &#39;Does not Contain&#39;):
+                condition_query += condition[&#39;Field&#39;] + &#34; &#34; + comparator_map[condition[&#39;Predicate&#39;]] + &#34; &#39;&#34; + \
+                                   condition[&#39;Data&#39;] + &#34;&#39;&#34;
+            else:
+                condition_query += condition[&#39;Field&#39;] + &#34; &#34; + comparator_map[condition[&#39;Predicate&#39;]] + &#34; &#39;%&#34; + \
+                                   condition[&#39;Data&#39;] + &#34;%&#39;&#34;
+        return base_query + condition_query
+
+    def __construct_modify_request(self, email_obj_list, modifier_dict):
+        &#34;&#34;&#34;
+        Brief:
+            helper method to construct the request to be sent to google servers to update the changes
+        Args:
+            email_obj_list: list of email obj
+            modifier_dict: modify dict with remove and add labels populated
+
+        Returns:
+            modified_dict updated with the list of email message ids
+        &#34;&#34;&#34;
+        modifier_dict[&#39;ids&#39;] = [email_obj.message_id for email_obj in email_obj_list]
+        return modifier_dict
+
+    def process_rules(self, rule_data_list, credential_path, service):
+        &#34;&#34;&#34;
+        Brief:
+            Method to Apply the rules to retrieve the emails from local db and apply the action process upon the email
+            and push it to servers
+        Pseudo-code:
+            Construct the query as per the filter rules
+            fetch the relevant data from DB
+            perform required modifications
+            update the database
+        Args:
+            rule_data_list: List of rule dicts to be applied in the emails
+            [{
+                &#39;predicate&#39;: &#39;All&#39;,
+                &#39;conditions&#39;: [{
+                    &#39;Field&#39;: &#39;from_address&#39;,
+                    &#39;Predicate&#39;: &#39;Equals&#39;,
+                    &#39;Data&#39;: &#39;Google&lt;no-reply@accounts.google.com&gt;&#39;
+                },
+                {
+                    &#39;Field&#39;: &#39;subject&#39;,
+                    &#39;Predicate&#39;: &#39;Contains&#39;,
+                    &#39;Data&#39;: &#39;Securityalert&#39;
+                },
+                {
+                    &#39;Field&#39;: &#39;content&#39;,
+                    &#39;Predicate&#39;: &#39;Contains&#39;,
+                    &#39;Data&#39;: &#39;grantaccess&#39;
+                }],
+                &#39;action&#39;: (&#39;MarkasRead&#39;,&#39;&#39;)
+            }]
+            service: email service name
+            credential_path: path of the credential and token file
+        Returns:
+            status : Boolean
+
+        &#34;&#34;&#34;
+        try:
+            email_dao_obj = EmailDAO(self.db_obj.cursor(dictionary=True))
+            updated_email_obj_list = []
+            modifier_dict_list = []
+            for rule_data in rule_data_list:
+                modifier_dict = {&#39;removeLabelIds&#39;: [], &#39;addLabelIds&#39;: []}
+                fetch_query = self.__construct_query(rule_data)
+                email_obj_list = email_dao_obj.get_email_snapshot(fetch_query)
+                if email_obj_list:
+                    getattr(self.action_obj, action_map[rule_data[&#39;action&#39;][0]])(email_obj_list=email_obj_list,
+                                                                                 option_tag=rule_data[&#39;action&#39;][1],
+                                                                                 modifier_dict=modifier_dict)
+                    modifier_dict = self.__construct_modify_request(email_obj_list, modifier_dict)
+                    modifier_dict_list.append(modifier_dict)
+                    email_dao_obj.update_email_snapshot(email_obj_list)
+                updated_email_obj_list.extend(email_obj_list)
+            self.modify_email_strategy_mapper[service](modifier_dict_list, credential_path)
+            self.db_obj.commit()
+
+            return updated_email_obj_list
+
+        except Exception as ex:
+            print(&#34;Exception in process filter method %s&#34; % ex)
+            return False
+        finally:
+            self.db_obj.close()</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="src.email_rules.Action"><code class="flex name class">
+<span>class <span class="ident">Action</span></span>
+</code></dt>
+<dd>
+<div class="desc"><p>helper class containing the required logic on executing the action on the emails</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Action:
+    &#34;&#34;&#34;
+    helper class containing the required logic on executing the action on the emails
+    &#34;&#34;&#34;
+
+    def __init__(self):
+        pass
+
+    def mark_as_read(self, **kwargs):
+        &#34;&#34;&#34;
+        marks the emails as read
+        Args:
+            email obj list: list of email objects
+            modifier_dict: modifier dict to be updated for creating the update request
+
+        Returns:
+
+        &#34;&#34;&#34;
+        for email_obj in kwargs[&#39;email_obj_list&#39;]:
+            if &#39;UNREAD&#39; in email_obj.labels:
+                email_obj.labels.remove(&#39;UNREAD&#39;)
+        kwargs[&#39;modifier_dict&#39;][&#39;removeLabelIds&#39;].append(&#39;UNREAD&#39;)
+
+    def mark_as_unread(self, **kwargs):
+        &#34;&#34;&#34;
+        marks the emails as unread
+        Args:
+            email obj list: list of email objects
+            modifier_dict: modifier dict to be updated for creating the update request
+
+        Returns:
+
+        &#34;&#34;&#34;
+        for email_obj in kwargs[&#39;email_obj_list&#39;]:
+            if &#39;UNREAD&#39; not in email_obj.labels:
+                email_obj.labels.append(&#39;UNREAD&#39;)
+        kwargs[&#39;modifier_dict&#39;][&#39;addLabelIds&#39;].append(&#39;UNREAD&#39;)
+
+    def move_to_folder(self, **kwargs):
+        &#34;&#34;&#34;
+        moves the emails to the given folders
+        Args:
+            email obj list: list of email objects
+            modifier_dict: modifier dict to be updated for creating the update request
+            option_tag: the destination folder
+        Returns:
+
+        &#34;&#34;&#34;
+        for email_obj in kwargs[&#39;email_obj_list&#39;]:
+            # remove existing folder from labels list
+            email_obj.labels = [label for label in email_obj.labels if label not in list(folders_options.keys())]
+            # add new folder to email labels
+            email_obj.labels.append(kwargs[&#39;option_tag&#39;])
+        kwargs[&#39;modifier_dict&#39;][&#39;addLabelIds&#39;].append(kwargs[&#39;option_tag&#39;])</code></pre>
+</details>
+<h3>Methods</h3>
+<dl>
+<dt id="src.email_rules.Action.mark_as_read"><code class="name flex">
+<span>def <span class="ident">mark_as_read</span></span>(<span>self, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>marks the emails as read</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt>email obj list: list of email objects</dt>
+<dt><strong><code>modifier_dict</code></strong></dt>
+<dd>modifier dict to be updated for creating the update request</dd>
+</dl>
+<p>Returns:</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def mark_as_read(self, **kwargs):
+    &#34;&#34;&#34;
+    marks the emails as read
+    Args:
+        email obj list: list of email objects
+        modifier_dict: modifier dict to be updated for creating the update request
+
+    Returns:
+
+    &#34;&#34;&#34;
+    for email_obj in kwargs[&#39;email_obj_list&#39;]:
+        if &#39;UNREAD&#39; in email_obj.labels:
+            email_obj.labels.remove(&#39;UNREAD&#39;)
+    kwargs[&#39;modifier_dict&#39;][&#39;removeLabelIds&#39;].append(&#39;UNREAD&#39;)</code></pre>
+</details>
+</dd>
+<dt id="src.email_rules.Action.mark_as_unread"><code class="name flex">
+<span>def <span class="ident">mark_as_unread</span></span>(<span>self, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>marks the emails as unread</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt>email obj list: list of email objects</dt>
+<dt><strong><code>modifier_dict</code></strong></dt>
+<dd>modifier dict to be updated for creating the update request</dd>
+</dl>
+<p>Returns:</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def mark_as_unread(self, **kwargs):
+    &#34;&#34;&#34;
+    marks the emails as unread
+    Args:
+        email obj list: list of email objects
+        modifier_dict: modifier dict to be updated for creating the update request
+
+    Returns:
+
+    &#34;&#34;&#34;
+    for email_obj in kwargs[&#39;email_obj_list&#39;]:
+        if &#39;UNREAD&#39; not in email_obj.labels:
+            email_obj.labels.append(&#39;UNREAD&#39;)
+    kwargs[&#39;modifier_dict&#39;][&#39;addLabelIds&#39;].append(&#39;UNREAD&#39;)</code></pre>
+</details>
+</dd>
+<dt id="src.email_rules.Action.move_to_folder"><code class="name flex">
+<span>def <span class="ident">move_to_folder</span></span>(<span>self, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>moves the emails to the given folders</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt>email obj list: list of email objects</dt>
+<dt><strong><code>modifier_dict</code></strong></dt>
+<dd>modifier dict to be updated for creating the update request</dd>
+<dt><strong><code>option_tag</code></strong></dt>
+<dd>the destination folder</dd>
+</dl>
+<p>Returns:</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def move_to_folder(self, **kwargs):
+    &#34;&#34;&#34;
+    moves the emails to the given folders
+    Args:
+        email obj list: list of email objects
+        modifier_dict: modifier dict to be updated for creating the update request
+        option_tag: the destination folder
+    Returns:
+
+    &#34;&#34;&#34;
+    for email_obj in kwargs[&#39;email_obj_list&#39;]:
+        # remove existing folder from labels list
+        email_obj.labels = [label for label in email_obj.labels if label not in list(folders_options.keys())]
+        # add new folder to email labels
+        email_obj.labels.append(kwargs[&#39;option_tag&#39;])
+    kwargs[&#39;modifier_dict&#39;][&#39;addLabelIds&#39;].append(kwargs[&#39;option_tag&#39;])</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="src.email_rules.EmailRules"><code class="flex name class">
+<span>class <span class="ident">EmailRules</span></span>
+</code></dt>
+<dd>
+<div class="desc"><p>EmailRules class hosting the core methods to process the rules on the available emails
+run the filter conditions to construct appropriate select query
+run the query and process the required action on the result
+stores the email entity with the updates in the local database
+uses the appropriate strategy method to authenticate and push the updates to server</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class EmailRules:
+    &#34;&#34;&#34;
+    EmailRules class hosting the core methods to process the rules on the available emails
+        run the filter conditions to construct appropriate select query
+        run the query and process the required action on the result
+        stores the email entity with the updates in the local database
+        uses the appropriate strategy method to authenticate and push the updates to server
+    &#34;&#34;&#34;
+
+    def __init__(self):
+        self.action_obj = Action()
+        self.db_obj = mysql.connector.connect(
+            host=&#34;localhost&#34;,
+            user=DB_USERNAME,
+            password=DB_PASSWORD,
+            database=DATABASE
+        )
+        self.modify_email_strategy_mapper = {
+            &#39;google&#39;: self.modify_email_google_strategy
+        }
+
+    def modify_email_google_strategy(self, modifier_dict_list, credential_path):
+        &#34;&#34;&#34;
+        Brief:
+            Google Email update strategy method which updates emails to google servers
+
+        Pseudo-code:
+            calls authentication module first to authenticate and retrieve the OAuth token
+            calls batch modify email method to update all email content to mail server
+        Args:
+            modifier_dict_list: list of modification dict to be given as the body of the request to be sent to google
+            credential_path: path of the credential/token file
+        Returns:
+
+        &#34;&#34;&#34;
+        google_services_obj = GoogleConnector(credentials_path=credential_path)
+        print(&#34;Authenticating...&#34;)
+        google_services_obj.authenticate()
+        print(&#34;Authentication Complete...&#34;)
+        for modifier_dict in modifier_dict_list:
+            google_services_obj.batch_modify_emails(modifier_dict)
+
+    def __construct_query(self, filter_data):
+        &#34;&#34;&#34;
+        Brief:
+            method to construct the fetch query based on the filter condition
+        Args:
+            filter_data: dict
+
+        Returns:
+            query: string
+        &#34;&#34;&#34;
+        base_query = &#34;SELECT * FROM email_snapshot&#34;
+        condition_query = &#34;&#34;
+        for condition in filter_data[&#39;conditions&#39;]:
+            if condition_query == &#34;&#34;:
+                # fist condition, append where
+                condition_query += &#34; where &#34;
+            else:
+                # not the first condiion,append operators
+                condition_query += &#34; and &#34; if filter_data[&#39;predicate&#39;] == &#39;All&#39; else &#34; or &#34;
+            if condition[&#39;Predicate&#39;] not in (&#39;Contains&#39;, &#39;Does not Contain&#39;):
+                condition_query += condition[&#39;Field&#39;] + &#34; &#34; + comparator_map[condition[&#39;Predicate&#39;]] + &#34; &#39;&#34; + \
+                                   condition[&#39;Data&#39;] + &#34;&#39;&#34;
+            else:
+                condition_query += condition[&#39;Field&#39;] + &#34; &#34; + comparator_map[condition[&#39;Predicate&#39;]] + &#34; &#39;%&#34; + \
+                                   condition[&#39;Data&#39;] + &#34;%&#39;&#34;
+        return base_query + condition_query
+
+    def __construct_modify_request(self, email_obj_list, modifier_dict):
+        &#34;&#34;&#34;
+        Brief:
+            helper method to construct the request to be sent to google servers to update the changes
+        Args:
+            email_obj_list: list of email obj
+            modifier_dict: modify dict with remove and add labels populated
+
+        Returns:
+            modified_dict updated with the list of email message ids
+        &#34;&#34;&#34;
+        modifier_dict[&#39;ids&#39;] = [email_obj.message_id for email_obj in email_obj_list]
+        return modifier_dict
+
+    def process_rules(self, rule_data_list, credential_path, service):
+        &#34;&#34;&#34;
+        Brief:
+            Method to Apply the rules to retrieve the emails from local db and apply the action process upon the email
+            and push it to servers
+        Pseudo-code:
+            Construct the query as per the filter rules
+            fetch the relevant data from DB
+            perform required modifications
+            update the database
+        Args:
+            rule_data_list: List of rule dicts to be applied in the emails
+            [{
+                &#39;predicate&#39;: &#39;All&#39;,
+                &#39;conditions&#39;: [{
+                    &#39;Field&#39;: &#39;from_address&#39;,
+                    &#39;Predicate&#39;: &#39;Equals&#39;,
+                    &#39;Data&#39;: &#39;Google&lt;no-reply@accounts.google.com&gt;&#39;
+                },
+                {
+                    &#39;Field&#39;: &#39;subject&#39;,
+                    &#39;Predicate&#39;: &#39;Contains&#39;,
+                    &#39;Data&#39;: &#39;Securityalert&#39;
+                },
+                {
+                    &#39;Field&#39;: &#39;content&#39;,
+                    &#39;Predicate&#39;: &#39;Contains&#39;,
+                    &#39;Data&#39;: &#39;grantaccess&#39;
+                }],
+                &#39;action&#39;: (&#39;MarkasRead&#39;,&#39;&#39;)
+            }]
+            service: email service name
+            credential_path: path of the credential and token file
+        Returns:
+            status : Boolean
+
+        &#34;&#34;&#34;
+        try:
+            email_dao_obj = EmailDAO(self.db_obj.cursor(dictionary=True))
+            updated_email_obj_list = []
+            modifier_dict_list = []
+            for rule_data in rule_data_list:
+                modifier_dict = {&#39;removeLabelIds&#39;: [], &#39;addLabelIds&#39;: []}
+                fetch_query = self.__construct_query(rule_data)
+                email_obj_list = email_dao_obj.get_email_snapshot(fetch_query)
+                if email_obj_list:
+                    getattr(self.action_obj, action_map[rule_data[&#39;action&#39;][0]])(email_obj_list=email_obj_list,
+                                                                                 option_tag=rule_data[&#39;action&#39;][1],
+                                                                                 modifier_dict=modifier_dict)
+                    modifier_dict = self.__construct_modify_request(email_obj_list, modifier_dict)
+                    modifier_dict_list.append(modifier_dict)
+                    email_dao_obj.update_email_snapshot(email_obj_list)
+                updated_email_obj_list.extend(email_obj_list)
+            self.modify_email_strategy_mapper[service](modifier_dict_list, credential_path)
+            self.db_obj.commit()
+
+            return updated_email_obj_list
+
+        except Exception as ex:
+            print(&#34;Exception in process filter method %s&#34; % ex)
+            return False
+        finally:
+            self.db_obj.close()</code></pre>
+</details>
+<h3>Methods</h3>
+<dl>
+<dt id="src.email_rules.EmailRules.modify_email_google_strategy"><code class="name flex">
+<span>def <span class="ident">modify_email_google_strategy</span></span>(<span>self, modifier_dict_list, credential_path)</span>
+</code></dt>
+<dd>
+<div class="desc"><h2 id="brief">Brief</h2>
+<p>Google Email update strategy method which updates emails to google servers</p>
+<p>Pseudo-code:
+calls authentication module first to authenticate and retrieve the OAuth token
+calls batch modify email method to update all email content to mail server</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>modifier_dict_list</code></strong></dt>
+<dd>list of modification dict to be given as the body of the request to be sent to google</dd>
+<dt><strong><code>credential_path</code></strong></dt>
+<dd>path of the credential/token file</dd>
+</dl>
+<p>Returns:</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def modify_email_google_strategy(self, modifier_dict_list, credential_path):
+    &#34;&#34;&#34;
+    Brief:
+        Google Email update strategy method which updates emails to google servers
+
+    Pseudo-code:
+        calls authentication module first to authenticate and retrieve the OAuth token
+        calls batch modify email method to update all email content to mail server
+    Args:
+        modifier_dict_list: list of modification dict to be given as the body of the request to be sent to google
+        credential_path: path of the credential/token file
+    Returns:
+
+    &#34;&#34;&#34;
+    google_services_obj = GoogleConnector(credentials_path=credential_path)
+    print(&#34;Authenticating...&#34;)
+    google_services_obj.authenticate()
+    print(&#34;Authentication Complete...&#34;)
+    for modifier_dict in modifier_dict_list:
+        google_services_obj.batch_modify_emails(modifier_dict)</code></pre>
+</details>
+</dd>
+<dt id="src.email_rules.EmailRules.process_rules"><code class="name flex">
+<span>def <span class="ident">process_rules</span></span>(<span>self, rule_data_list, credential_path, service)</span>
+</code></dt>
+<dd>
+<div class="desc"><h2 id="brief">Brief</h2>
+<p>Method to Apply the rules to retrieve the emails from local db and apply the action process upon the email
+and push it to servers
+Pseudo-code:
+Construct the query as per the filter rules
+fetch the relevant data from DB
+perform required modifications
+update the database</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>rule_data_list</code></strong></dt>
+<dd>List of rule dicts to be applied in the emails</dd>
+<dt>[{</dt>
+<dt>'predicate': 'All',</dt>
+<dt>'conditions': [{</dt>
+<dt>'Field': 'from_address',</dt>
+<dt>'Predicate': 'Equals',</dt>
+<dt>'Data': 'Google<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#110;&#111;&#45;&#114;&#101;&#112;&#108;&#121;&#64;&#97;&#99;&#99;&#111;&#117;&#110;&#116;&#115;&#46;&#103;&#111;&#111;&#103;&#108;&#101;&#46;&#99;&#111;&#109;">&#110;&#111;&#45;&#114;&#101;&#112;&#108;&#121;&#64;&#97;&#99;&#99;&#111;&#117;&#110;&#116;&#115;&#46;&#103;&#111;&#111;&#103;&#108;&#101;&#46;&#99;&#111;&#109;</a>'</dt>
+<dt>},</dt>
+<dt>{</dt>
+<dt>'Field': 'subject',</dt>
+<dt>'Predicate': 'Contains',</dt>
+<dt>'Data': 'Securityalert'</dt>
+<dt>},</dt>
+<dt>{</dt>
+<dt>'Field': 'content',</dt>
+<dt>'Predicate': 'Contains',</dt>
+<dt>'Data': 'grantaccess'</dt>
+<dt>}],</dt>
+<dt>'action': ('MarkasRead','')</dt>
+<dt>}]</dt>
+<dt><strong><code>service</code></strong></dt>
+<dd>email service name</dd>
+<dt><strong><code>credential_path</code></strong></dt>
+<dd>path of the credential and token file</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>status </code></dt>
+<dd>Boolean</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def process_rules(self, rule_data_list, credential_path, service):
+    &#34;&#34;&#34;
+    Brief:
+        Method to Apply the rules to retrieve the emails from local db and apply the action process upon the email
+        and push it to servers
+    Pseudo-code:
+        Construct the query as per the filter rules
+        fetch the relevant data from DB
+        perform required modifications
+        update the database
+    Args:
+        rule_data_list: List of rule dicts to be applied in the emails
+        [{
+            &#39;predicate&#39;: &#39;All&#39;,
+            &#39;conditions&#39;: [{
+                &#39;Field&#39;: &#39;from_address&#39;,
+                &#39;Predicate&#39;: &#39;Equals&#39;,
+                &#39;Data&#39;: &#39;Google&lt;no-reply@accounts.google.com&gt;&#39;
+            },
+            {
+                &#39;Field&#39;: &#39;subject&#39;,
+                &#39;Predicate&#39;: &#39;Contains&#39;,
+                &#39;Data&#39;: &#39;Securityalert&#39;
+            },
+            {
+                &#39;Field&#39;: &#39;content&#39;,
+                &#39;Predicate&#39;: &#39;Contains&#39;,
+                &#39;Data&#39;: &#39;grantaccess&#39;
+            }],
+            &#39;action&#39;: (&#39;MarkasRead&#39;,&#39;&#39;)
+        }]
+        service: email service name
+        credential_path: path of the credential and token file
+    Returns:
+        status : Boolean
+
+    &#34;&#34;&#34;
+    try:
+        email_dao_obj = EmailDAO(self.db_obj.cursor(dictionary=True))
+        updated_email_obj_list = []
+        modifier_dict_list = []
+        for rule_data in rule_data_list:
+            modifier_dict = {&#39;removeLabelIds&#39;: [], &#39;addLabelIds&#39;: []}
+            fetch_query = self.__construct_query(rule_data)
+            email_obj_list = email_dao_obj.get_email_snapshot(fetch_query)
+            if email_obj_list:
+                getattr(self.action_obj, action_map[rule_data[&#39;action&#39;][0]])(email_obj_list=email_obj_list,
+                                                                             option_tag=rule_data[&#39;action&#39;][1],
+                                                                             modifier_dict=modifier_dict)
+                modifier_dict = self.__construct_modify_request(email_obj_list, modifier_dict)
+                modifier_dict_list.append(modifier_dict)
+                email_dao_obj.update_email_snapshot(email_obj_list)
+            updated_email_obj_list.extend(email_obj_list)
+        self.modify_email_strategy_mapper[service](modifier_dict_list, credential_path)
+        self.db_obj.commit()
+
+        return updated_email_obj_list
+
+    except Exception as ex:
+        print(&#34;Exception in process filter method %s&#34; % ex)
+        return False
+    finally:
+        self.db_obj.close()</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="src" href="index.html">src</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="src.email_rules.Action" href="#src.email_rules.Action">Action</a></code></h4>
+<ul class="">
+<li><code><a title="src.email_rules.Action.mark_as_read" href="#src.email_rules.Action.mark_as_read">mark_as_read</a></code></li>
+<li><code><a title="src.email_rules.Action.mark_as_unread" href="#src.email_rules.Action.mark_as_unread">mark_as_unread</a></code></li>
+<li><code><a title="src.email_rules.Action.move_to_folder" href="#src.email_rules.Action.move_to_folder">move_to_folder</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="src.email_rules.EmailRules" href="#src.email_rules.EmailRules">EmailRules</a></code></h4>
+<ul class="">
+<li><code><a title="src.email_rules.EmailRules.modify_email_google_strategy" href="#src.email_rules.EmailRules.modify_email_google_strategy">modify_email_google_strategy</a></code></li>
+<li><code><a title="src.email_rules.EmailRules.process_rules" href="#src.email_rules.EmailRules.process_rules">process_rules</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.8.3</a>.</p>
+</footer>
+</body>
+</html>

@@ -77,7 +77,8 @@ class EmailDAO:
             status: boolean
         """
         try:
-            query = "REPLACE INTO email_snapshot (email_snapshot_id, message_id, labels, from_address, to_address, date, subject, content) \
+            query = "REPLACE INTO email_snapshot (email_snapshot_id, message_id, labels, from_address, \
+                     to_address, date, subject, content) \
                      VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
             attribute_values = []
             for email_entity in email_entity_list:
