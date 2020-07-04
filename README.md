@@ -1,5 +1,5 @@
 # Python Gmail Integration
-![pylint badge](https://github.com/vsathyasubramanian/python-gmail/blob/master/pylint.svg)
+![pylint badge](https://github.com/vsathyasubramanian/python-gmail/blob/python-gmail_v2/pylint.svg)
 
 A simple email manager CLI program using Gmail API to fetch emails and store it in a local DB and process filters on it 
 
