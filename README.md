@@ -4,6 +4,7 @@
 A simple email manager CLI program using Gmail API to fetch emails and store it in a local DB and process filters on it 
 
 Pylint report is available in [pylint report](https://github.com/vsathyasubramanian/python-gmail/blob/python-gmail_v2/pylint_report.txt) 
+
 Documentation files can be accessed from [index](https://github.com/vsathyasubramanian/python-gmail/blob/python-gmail_v2/docs/index.html)
 
 ## Requirements
