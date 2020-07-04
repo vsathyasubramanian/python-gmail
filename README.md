@@ -29,6 +29,12 @@ mysql -u 'root' -p 'password' < email_manager_initial_data.sql
 
 Change the database user name and password in the config.py file if need be.
 
+Add src to local PYTHONPATH
+
+```bash
+set PYTHONPATH=%PYTHONPATH%; <<path to .\src>>
+```
+
 ### script usage
 This is a two part CLI program.
 
