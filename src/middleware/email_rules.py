@@ -85,11 +85,11 @@ class EmailRules:
             password=DB_PASSWORD,
             database=DATABASE
         )
-        self.modify_email_strategy_mapper = {
-            'google': self.modify_email_google_strategy
+        self.email_strategy_mapper = {
+            'google': self.email_google_strategy
         }
 
-    def modify_email_google_strategy(self, modifier_dict_list, credential_path):
+    def email_google_strategy(self, modifier_dict_list, credential_path):
         """
         Brief:
             Google Email update strategy method which updates emails to google servers
@@ -204,7 +204,7 @@ class EmailRules:
                     modifier_dict_list.append(modifier_dict)
                     email_dao_obj.update_email_snapshot(email_obj_list)
                 updated_email_obj_list.extend(email_obj_list)
-            self.modify_email_strategy_mapper[service](modifier_dict_list, credential_path)
+            self.email_strategy_mapper[service](modifier_dict_list, credential_path)
             self.db_obj.commit()
 
             return updated_email_obj_list
