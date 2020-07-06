@@ -42,12 +42,12 @@ The first script would trigger an OAuth request to the google server and upon su
 It fetches all the mails from the google servers and parses it and stores it in local database 
 
 ```bash
-python trigger_email_retrival.py
+python controller/cli/trigger_email_retrival.py
 ```
 
 
 The second script can be run in two modes, Auto would read the rule from config.py and execute it on the emails and Manual would prompt the user for rules options.The updates are performed based on the action chosen and the updates are pushed to the servers along with a local database is update.
 
 ```bash
-python trigger_email_rules.py <<auto/manual>>
+python controller/cli/trigger_email_rules.py <<auto/manual>>
 ```
